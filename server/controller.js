@@ -32,28 +32,29 @@ module.exports = {
             console.log(req.body.openingName);
             openingList.push(req.body);
            
-            let list = ''
-            for(let i = 0; i < openingList.length; i++){
-                list += `${openingList[i].openingName}, ` 
-            }
+            // let list = ''
+            // for(let i = 0; i < openingList.length; i++){
+            //     list += `${openingList[i].openingName}, ` 
+            // }
             console.log("==========");
-            res.status(200).send(list);
+            res.status(200).send(openingList);
             console.log("The current list is:");
             console.log(openingList);
         
     },
 
     delOpening: (req, res) => {
+        console.log(req.params);
         for(let i = 0; i < openingList.length; i++) {
-            if(openingList[i].openingName === req.body.openingName) {
+            if(openingList[i].openingName === req.query.openingName) {
                 console.log("Deleting Opening off the list...");
                 openingList.splice(i,1);
 
-                let list = ''
-                for(let i = 0; i < openingList.length; i++){
-                    list += `${openingList[i].openingName}, ` 
-                }
-                res.status(200).send(list);
+                // let list = ''
+                // for(let i = 0; i < openingList.length; i++){
+                //     list += `${openingList[i].openingName}, ` 
+                // }
+                res.status(200).send(openingList);
                 console.log("The current list is:");
                 console.log(openingList);
                 return;
@@ -69,11 +70,11 @@ module.exports = {
                 openingList[i].openingName = req.body.data.newOpeningName;
                 console.log("Changed opening in the list...");
 
-                let list = ''
-                for(let i = 0; i < openingList.length; i++){
-                    list += `${openingList[i].openingName}, ` 
-                }
-                res.status(200).send(list);
+                // let list = ''
+                // for(let i = 0; i < openingList.length; i++){
+                //     list += `${openingList[i].openingName}, ` 
+                // }
+                res.status(200).send(openingList);
                 console.log("The current list is:");
                 console.log(openingList);
                 return;

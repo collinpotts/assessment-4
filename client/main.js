@@ -7,40 +7,35 @@ const openingList = document.getElementById("opening-list")
 
 const baseURL = `http://localhost:4000/api`
 
+const createListSentence = arr => {
+    openingList.innerHTML = '';
+    let list = document.createElement('ul');
+    for(let i = 0; i < arr.length; i++) {
+        let {openingName} = arr[i];
+        let listItem = document.createElement('li');
+        listItem.textContent = openingName;
+        list.appendChild(listItem);
+    }
+    openingList.appendChild(list);
+} 
+
 
 const addOpening = body => axios.post(`${baseURL}/aOpening`, body).then( res => {
-    openingList.innerHTML = ''
-    const listDisplay = document.createElement('div')
-    listDisplay.classList.add('list-display')
-
-    listDisplay.innerHTML = `<p class="opening">Current List: ${JSON.stringify(res.data)}</p>`
-    openingList.appendChild(listDisplay)
+    createListSentence(res.data);
 }).catch(err => {
   console.log(err)
   alert('Uh oh. Your request did not work.')
 })
 
-const delOpening = body => axios.delete(`${baseURL}/dOpening`, {data: body}).then( res => {
-    openingList.innerHTML = ''
-    const listDisplay = document.createElement('div')
-    listDisplay.classList.add('list-display')
-
-    listDisplay.innerHTML = `<p class="opening">Current List: ${JSON.stringify(res.data)}</p>`
-
-    openingList.appendChild(listDisplay)
+const delOpening = body => axios.delete(`${baseURL}/dOpening?openingName=${body}`).then( res => {
+    createListSentence(res.data);
 }).catch(err => {
   console.log(err)
   alert('Uh oh. Your request did not work.')
 })
 
 const editOpening = body => axios.put(`${baseURL}/eOpening`, {data: body}).then( res => {
-    openingList.innerHTML = ''
-    const listDisplay = document.createElement('div')
-    listDisplay.classList.add('list-display')
-
-    listDisplay.innerHTML = `<p class="opening">Current List: ${JSON.stringify(res.data)}</p>`
-
-    openingList.appendChild(listDisplay)
+    createListSentence(res.data);
 }).catch(err => {
   console.log(err)
   alert('Uh oh. Your request did not work.')
@@ -81,11 +76,8 @@ function openingDelHandler(e) {
     
     let openingElement = document.getElementById("chess-opening")
   
-    let opening = {
-        openingName: openingElement.value
-    }
 
-    delOpening(opening);
+    delOpening(openingElement.value);
 
 }
 
